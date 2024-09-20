@@ -7,12 +7,9 @@ import { triviaAPI } from "./AxiosService.js";
 class QuestionsService {
   async answerQuestion(questionId, userAnswer) {
     const question = AppState.questions.find(question => question.id == questionId)
-    console.log(question, userAnswer);
 
     question.answered = true
-    if (question.correctAnswer == userAnswer) {
-      question.answeredCorrectly = true
-    }
+    question.answeredCorrectly = question.correctAnswer == userAnswer
 
     AppState.emit('questions')
 
@@ -20,13 +17,20 @@ class QuestionsService {
 
     if (allQuestionsAnswered) {
       setTimeout(async () => {
-        await this.getQuestions()
-      }, 2000)
+        AppState.activeCategory ? await this.getQuestionsByCategoryId() : await this.getQuestions()
+      }, 1000)
     }
   }
 
   async getQuestions() {
     const response = await triviaAPI.get('api.php?amount=10')
+    console.log('GOT QUESTIONS', response.data);
+    AppState.questions = response.data.results.map(questionPOJO => new Question(questionPOJO))
+  }
+
+  async getQuestionsByCategoryId() {
+    const category = AppState.activeCategory
+    const response = await triviaAPI.get(`api.php?amount=10&category=${category.id}`)
     console.log('GOT QUESTIONS', response.data);
     AppState.questions = response.data.results.map(questionPOJO => new Question(questionPOJO))
   }
