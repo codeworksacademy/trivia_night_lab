@@ -2,10 +2,10 @@
 
 .category {
   border-radius: 15px 0 0 15px;
-  padding: 6px 10px;
+  padding: 6px 0 6px 8px;
 }
 
 .difficulty {
   border-radius: 0 15px 15px 0;
-  padding: 6px 10px;
+  padding: 6px 8px;
 }
