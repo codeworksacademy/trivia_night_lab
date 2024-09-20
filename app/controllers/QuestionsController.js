@@ -24,4 +24,13 @@ export class QuestionsController {
     questions.forEach(question => htmlContent += question.cardHTMLTemplate)
     setHTML('questions', htmlContent)
   }
+
+  async answerQuestion(questionId, userAnswer) {
+    try {
+      questionsService.answerQuestion(questionId, userAnswer)
+    } catch (error) {
+      Pop.error(error)
+      console.error(error);
+    }
+  }
 }
