@@ -1,3 +1,4 @@
+import { AppState } from "../AppState.js"
 import { generateId } from "../utils/GenerateId.js"
 import { Category } from "./Category.js"
 
@@ -20,12 +21,16 @@ export class Question {
     }
   }
 
+  get positionNumber() {
+    return AppState.questions.findIndex(question => question.id == this.id) + 1
+  }
+
   get cardHTMLTemplate() {
     return `
     <div class="col-md-6 mb-3">
       <div>
         <span class="category ${this.bubbleColor} fw-bold">
-          Question 1: ${this.category}
+          Question ${this.positionNumber}: ${this.category}
         </span>
         <span class="difficulty bg-info text-light">
           ${this.difficulty}
