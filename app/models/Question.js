@@ -14,6 +14,7 @@ export class Question {
     this.answers = this.type == 'boolean' ? ['True', 'False'] : [...data.incorrect_answers, this.correctAnswer]
 
     if (this.type == 'multiple') {
+      this.correctAnswer = this.correctAnswer.replaceAll("'", "\'")
       this.answers = this.answers.map(answer => answer.replaceAll("'", "\'"))
       this.answers.sort(() => Math.random() - .5)
     }

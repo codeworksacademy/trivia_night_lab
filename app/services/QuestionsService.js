@@ -18,8 +18,10 @@ class QuestionsService {
     if (allQuestionsAnswered) {
       setTimeout(async () => {
         AppState.activeCategory ? await this.getQuestionsByCategoryId() : await this.getQuestions()
-      }, 1000)
+      }, 1500)
     }
+
+    return allQuestionsAnswered
   }
 
   async getQuestions() {

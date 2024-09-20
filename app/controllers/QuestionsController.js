@@ -32,14 +32,21 @@ export class QuestionsController {
     const questions = AppState.questions
     let htmlContent = ''
     questions.forEach(question => htmlContent += question.cardHTMLTemplate)
+    setHTML('questions', htmlContent)
     const questionsElem = document.getElementById('questions')
     questionsElem.innerHTML = htmlContent
-    questionsElem.scrollTo({ behavior: "smooth" })
+  }
+
+  scrollToTop() {
+    const timeUntilNewQuestions = 1500
+    Pop.toast('Getting new questions!', 'question', 'top-end', timeUntilNewQuestions, true)
+    setTimeout(() => { document.body.scrollIntoView({ behavior: 'smooth' }) }, timeUntilNewQuestions)
   }
 
   async answerQuestion(questionId, userAnswer) {
     try {
-      questionsService.answerQuestion(questionId, userAnswer)
+      const allquestionsAnswered = await questionsService.answerQuestion(questionId, userAnswer)
+      if (allquestionsAnswered) this.scrollToTop()
     } catch (error) {
       Pop.error(error)
       console.error(error);
