@@ -60,15 +60,11 @@ export class Question {
   get answerButtons() {
     let buttonHTML = ''
     this.answers.forEach(answer => {
-
       buttonHTML += `
       <button onclick="app.QuestionsController.answerQuestion('${this.id}', '${answer}')" class="btn ${this.buttonColor(answer)}" ${this.answered ? 'disabled' : ''}>
         ${answer}
       </button>`
     })
-
     return buttonHTML
   }
-
-
 }
