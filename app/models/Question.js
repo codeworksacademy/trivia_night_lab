@@ -12,7 +12,7 @@ export class Question {
     this.answered = false
     this.answeredCorrectly = false
     this.correctAnswer = data.correct_answer
-    this.answers = [this.correctAnswer, ...data.incorrect_answers,]
+    this.answers = this.type == 'boolean' ? ['True', 'False'] : [this.correctAnswer, ...data.incorrect_answers,]
     if (this.type == 'multiple') {
       this.correctAnswer = this.correctAnswer.replaceAll("'", "\'")
       this.answers = this.answers.map(answer => answer.replaceAll("'", "\'"))
